@@ -10,28 +10,50 @@ const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '29230862-8ed88c62e82238b6e063c75d0'
 
 let searchQuery = '';
+let currentPage = 1;
+
+// btnLoadMore.setAttribute("disabled", "disabled");
+
 
 
 function fetchGallery (searchQuery) {
-    return fetch(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=1`).then(response => response.json());
+    
+    return fetch(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`).then(response => response.json());
 };
 
 formEl.addEventListener('submit', onSearchSubmit);
+btnLoadMore.addEventListener('click', onLoadMoreImg);
 
 function onSearchSubmit(e) {
     e.preventDefault();
+    divGalleryEl.innerHTML = "";
 
-    const searchQuery = inputSearch.value;
+    searchQuery = inputSearch.value;
 
 
-
+    currentPage = 1;
     fetchGallery(searchQuery).then(data => {
+        
         console.log(data);
         addMarkup(data.hits);
+        currentPage +=1;
+        // btnLoadMore.classList.remove('.is-hidden');
     })
     .catch(error => (console.log(error)));
 
 
+};
+
+function onLoadMoreImg(e){
+    e.preventDefault();
+    fetchGallery(searchQuery).then(data => {
+        
+        console.log(data);
+        addMarkup(data.hits);
+        currentPage +=1;
+      
+    })
+    .catch(error => (console.log(error)));
 };
 
 
@@ -64,10 +86,6 @@ function createGalleryItem (item) {
 function createGallery (array) {
     return array.reduce((acc, item) => acc + createGalleryItem(item), "")
 };
-
-// const createGallery = (array) => 
-//     array.reduce((acc, item) => acc + createGalleryItem(item), "")
-// ;
 
 
 function addMarkup (array) {
