@@ -3,23 +3,40 @@ const inputSearch = document.querySelector('input[name="searchQuery"]');
 const divGalleryEl = document.querySelector('.gallery');
 const btnSubmit = document.querySelector('.submit');
 const btnLoadMore = document.querySelector('.load-more');
+// console.log(btnLoadMore);
+// console.log(btnLoadMore.classList);
+
+
+
+
+// import API from './js/fetchGallery';
+
+
+
+btnLoadMore.classList.add('is-hidden');
 
 
 
 const BASE_URL = 'https://pixabay.com/api/';
 const API_KEY = '29230862-8ed88c62e82238b6e063c75d0'
 
-let searchQuery = '';
+
 let currentPage = 1;
-
-// btnLoadMore.setAttribute("disabled", "disabled");
-
-
+let searchQuery = '';
 
 function fetchGallery (searchQuery) {
+  
+    return fetch(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`)
+    .then(  (response) => {
+        if (!response.ok) {
+          throw new Error(response.status);
+        }
+        return response.json();
+      })
     
-    return fetch(`${BASE_URL}?key=${API_KEY}&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`).then(response => response.json());
+    
 };
+
 
 formEl.addEventListener('submit', onSearchSubmit);
 btnLoadMore.addEventListener('click', onLoadMoreImg);
@@ -30,14 +47,18 @@ function onSearchSubmit(e) {
 
     searchQuery = inputSearch.value;
 
-
     currentPage = 1;
+    btnLoadMore.classList.remove('is-hidden');
+
     fetchGallery(searchQuery).then(data => {
+      
+    
+
         
         console.log(data);
         addMarkup(data.hits);
         currentPage +=1;
-        // btnLoadMore.classList.remove('.is-hidden');
+        btnLoadMore.classList.remove('is-hidden');
     })
     .catch(error => (console.log(error)));
 
