@@ -1,4 +1,6 @@
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import addMarkup from './js/addMarkup';
 import ApiData from './js/fetchGallery';
 
@@ -27,6 +29,7 @@ function onSearchSubmit(e) {
       }
         Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
         addMarkup(data.hits);
+        const lightbox = new SimpleLightbox('.gallery a');
         apiData.incrementCurrentPage();
         btnLoadMore.classList.remove('is-hidden');
     })
@@ -37,6 +40,8 @@ function onLoadMoreImg(e){
     e.preventDefault();
     apiData.fetchGallery().then(data => {
       addMarkup(data.hits);
+      const lightbox = new SimpleLightbox('.gallery a');
+      lightbox.refresh();
       apiData.incrementCurrentPage();
 
       if (apiData.currentPage > Math.ceil(data.totalHits/apiData.perPage) ) {

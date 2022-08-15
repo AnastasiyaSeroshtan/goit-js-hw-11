@@ -1,8 +1,11 @@
 const divGalleryEl = document.querySelector('.gallery');
 
 function createGalleryItem (item) {
-    return `<div class="photo-card">
+    return `
+    <div class="photo-card">
+    <a class="gallery__item" href="${item.largeImageURL}">
     <img src="${item.webformatURL}" alt="${item.tags}" loading="lazy" />
+    </a>
     <div class="info">
       <p class="info-item">
         <b>Likes</b>
