@@ -15,6 +15,7 @@ btnLoadMore.classList.add('is-hidden');
 
 function onSearchSubmit(e) {
     e.preventDefault();
+    btnLoadMore.classList.add('is-hidden');
     divGalleryEl.innerHTML = "";
     apiData.resetPage();
     apiData.searchQuery = inputSearch.value;
@@ -24,7 +25,6 @@ function onSearchSubmit(e) {
         Notiflix.Notify.failure('Sorry, there are no images matching your search query. Please try again.');
         return;
       }
-      btnLoadMore.classList.remove('is-hidden');
         Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
         addMarkup(data.hits);
         apiData.incrementCurrentPage();
