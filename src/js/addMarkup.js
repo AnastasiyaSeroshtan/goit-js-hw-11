@@ -34,5 +34,3 @@ export default function addMarkup (array) {
     divGalleryEl.insertAdjacentHTML('beforeend', result);
 
 };
-
-// export addMarkup (array);
