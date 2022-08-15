@@ -3,6 +3,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import addMarkup from './js/addMarkup';
 import ApiData from './js/fetchGallery';
+// import NewApiData from './js/newApiData';
 
 const formEl = document.querySelector('.search-form');
 const inputSearch = document.querySelector('input[name="searchQuery"]');
