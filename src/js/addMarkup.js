@@ -4,24 +4,24 @@ function createGalleryItem (item) {
     return `
     <div class="photo-card">
     <a class="gallery__item" href="${item.largeImageURL}">
-    <img src="${item.webformatURL}" alt="${item.tags}" loading="lazy" />
+    <img class="gallery__img" src="${item.webformatURL}" alt="${item.tags}" loading="lazy" />
     </a>
     <div class="info">
       <p class="info-item">
         <b>Likes</b>
-        <span>${item.likes}</span>
+        <br>${item.likes}</br>
       </p>
       <p class="info-item">
         <b>Views</b>
-        <span>${item.views}</span>
+        <br>${item.views}</br>
       </p>
       <p class="info-item">
         <b>Comments</b>
-        <span>${item.comments}</span>
+        <br>${item.comments}</br>
       </p>
       <p class="info-item">
         <b>Downloads</b>
-        <span>${item.downloads}</span>
+        <br>${item.downloads}</br>
       </p>
     </div>
   </div>`
@@ -31,9 +31,9 @@ function createGallery (array) {
     return array.reduce((acc, item) => acc + createGalleryItem(item), "")
 };
 
-
-export default function addMarkup (array) {
+function addMarkup (array) {
     const result = createGallery(array);
     divGalleryEl.insertAdjacentHTML('beforeend', result);
-
 };
+
+export {addMarkup};
