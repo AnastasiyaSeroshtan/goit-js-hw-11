@@ -1,5 +1,7 @@
 // import axios from "axios";
 
+import axios from "axios";
+
 
 
 const BASE_URL = 'https://pixabay.com/api/';
@@ -14,13 +16,9 @@ export default class ApiData {
 
     async fetchGallery () {
       try {
-        const response = await fetch(`${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.perPage}&page=${this.currentPage}`);
-        
-        if (!response.ok) {
-          throw new Error(response.status)
-        }
-        const data = await response.json();
-        return data;
+        const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.perPage}&page=${this.currentPage}`);
+        return response;
+      
       }
       catch(error) {
         console.log(error);
