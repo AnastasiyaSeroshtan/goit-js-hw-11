@@ -85,11 +85,13 @@ img {
     height: 30px;
     color: #fff;
     border-radius: 8px;
+    transition: scale 250ms linear;
 }
 
 .load-more:hover,
 .load-more:focus,
-.btn__submit:hover {
+.btn__submit:hover,
+.btn__submit:focus {
   scale: 1.1;
 }
 
