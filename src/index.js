@@ -57,6 +57,7 @@ function onLoadMoreImg(e){
         return  Notiflix.Notify.failure(`We're sorry, but you've reached the end of search results.`);
       }
       Notiflix.Notify.info(`You can still see ${imgRest} images.`);
+      
     })
     .catch(error => (console.log(error)));
 };
