@@ -14,6 +14,7 @@ const apiData = new ApiData();
 formEl.addEventListener('submit', onSearchSubmit);
 btnLoadMore.addEventListener('click', onLoadMoreImg);
 btnLoadMore.classList.add('is-hidden');
+const lightbox = new SimpleLightbox('.gallery a');
 
 function onSearchSubmit(e) {
     e.preventDefault();
@@ -29,16 +30,12 @@ function onSearchSubmit(e) {
       }
       if (data.data.hits.length < apiData.perPage) {
         Notiflix.Notify.info(`Hooray! We found ${data.data.totalHits} images.`);
-        addMarkup(data.data.hits);
-        const lightbox = new SimpleLightbox('.gallery a');
-        apiData.incrementCurrentPage();
+        addMarkupAndPage(data);
         btnLoadMore.classList.add('is-hidden');
         return
       }
         Notiflix.Notify.info(`Hooray! We found ${data.data.totalHits} images.`);
-        addMarkup(data.data.hits);
-        const lightbox = new SimpleLightbox('.gallery a');
-        apiData.incrementCurrentPage();
+        addMarkupAndPage(data);
         btnLoadMore.classList.remove('is-hidden');
     })
     .catch(error => (console.log(error)));
@@ -48,15 +45,13 @@ function onLoadMoreImg(e){
     e.preventDefault();
     apiData.fetchGallery().then(data => {
       const imgRest = data.data.totalHits - apiData.currentPage*apiData.perPage;
-      addMarkup(data.data.hits);
-      const lightbox = new SimpleLightbox('.gallery a');
-      lightbox.refresh();
+      addMarkupAndPage(data);
       const { height: cardHeight } = divGalleryEl.firstElementChild.getBoundingClientRect();
       window.scrollBy({
       top: cardHeight * 2,
       behavior: "smooth",
 });
-      apiData.incrementCurrentPage();
+      
       if (imgRest <= 0) {
         btnLoadMore.classList.add('is-hidden');
         return  Notiflix.Notify.failure(`We're sorry, but you've reached the end of search results.`);
@@ -64,6 +59,12 @@ function onLoadMoreImg(e){
       Notiflix.Notify.info(`You can still see ${imgRest} images.`);
     })
     .catch(error => (console.log(error)));
+};
+
+function addMarkupAndPage(data) {
+    addMarkup(data.data.hits);
+    lightbox.refresh();
+    apiData.incrementCurrentPage();
 };
 
 

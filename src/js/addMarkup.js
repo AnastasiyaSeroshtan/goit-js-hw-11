@@ -1,3 +1,4 @@
+import SimpleLightbox from "simplelightbox";
 const divGalleryEl = document.querySelector('.gallery');
 
 function createGalleryItem (item) {

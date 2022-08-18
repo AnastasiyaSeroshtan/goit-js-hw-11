@@ -11,7 +11,6 @@ export default class ApiData {
     async fetchGallery () {
       try {
         const response = await axios.get(`${BASE_URL}?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.perPage}&page=${this.currentPage}`);
-        console.log(response);
         return response;
       }
       catch(error) {
